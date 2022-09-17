@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { computed, onMounted, onUpdated, ref } from "vue";
 import ApplicationLogo from "@/Components/ApplicationLogo.vue";
 import Dropdown from "@/Components/Dropdown.vue";
 import DropdownLink from "@/Components/DropdownLink.vue";
@@ -8,10 +8,20 @@ import ResponsiveNavLink from "@/Components/ResponsiveNavLink.vue";
 import { Link } from "@inertiajs/inertia-vue3";
 
 const showingNavigationDropdown = ref(false);
+
+const showFlash = ref(true);
+
+onMounted(() => setTimeout(() => (showFlash.value = false), 2000));
 </script>
 
 <template>
   <div>
+    <div
+      v-if="$page.props.flash.message && showFlash"
+      class="w-full p-3 text-center bg-green-400 text-white text-xl"
+    >
+      {{ $page.props.flash.message }}
+    </div>
     <div class="min-h-screen bg-gray-100">
       <nav class="bg-white border-b border-gray-100">
         <!-- Primary Navigation Menu -->

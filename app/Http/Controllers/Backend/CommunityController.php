@@ -17,7 +17,11 @@ class CommunityController extends Controller
      */
     public function index()
     {
-        $communities = Community::all();
+        $communities = Community::paginate(5)->through(fn($community) => [
+            'id' => $community->id,
+            'name' => $community->name,
+            'slug' => $community->slug
+        ]);
         return Inertia::render('Communities/Index', compact('communities'));
     }
 
@@ -31,39 +35,24 @@ class CommunityController extends Controller
         return Inertia::render('Communities/Create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+   
     public function store(CommunityStoreRequest $request)
     {
         Community::create($request->validated() + ['user_id' => auth()->id()]);
 
-        return to_route('communities.index');
+        return to_route('communities.index')->with('message', 'Community Created Successfully');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+   
+    public function edit(Community $community)
     {
-        //
+        return Inertia::render('Communities/Edit', compact('community'));
     }
 
     /**
@@ -73,9 +62,15 @@ class CommunityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Community $community)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required',
+            'description' => 'required|min:5'
+        ]);
+
+        $community->update($validated);
+        return to_route('communities.index')->with('message', 'Community Updated Successfully');
     }
 
     /**
@@ -84,8 +79,9 @@ class CommunityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Community $community)
     {
-        //
+        $community->delete();
+        return to_route('communities.index')->with('message', 'Community deleted Successfully');
     }
 }
