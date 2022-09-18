@@ -11,7 +11,7 @@ class Post extends Model
     use HasFactory, Sluggable;
 
     protected $fillable = [
-        'user_Id', 
+        'user_id', 
         'community_id', 
         'title', 
         'slug', 
@@ -26,5 +26,13 @@ class Post extends Model
                 'source' => 'title'
             ]
         ];
+    }
+
+    public function community() {
+        return $this->belongsTo(Community::class);
+    }
+
+    public function user() {
+        return $this->belongsTo(User::class);
     }
 }
