@@ -8,16 +8,22 @@ import { Head, useForm } from "@inertiajs/inertia-vue3";
 
 const props = defineProps({
     community: Object,
-    errors: Object,
+    post: Object,
 });
 
 const form = useForm({
-    name: props.community.name,
-    description: props.community.description,
+    title: props.post?.title,
+    url: props.post?.url,
+    description: props.post?.description,
 });
 
 const submit = () => {
-    form.put(route("communities.update", props.community.slug));
+    form.put(
+        route("communities.posts.update", [
+            props.community.slug,
+            props.post.slug,
+        ])
+    );
 };
 </script>
 
@@ -27,7 +33,7 @@ const submit = () => {
     <AuthenticatedLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Update Community
+                Create Post for {{ community.name }}
             </h2>
         </template>
 
@@ -36,18 +42,33 @@ const submit = () => {
                 <div class="max-w-md mx-auto p-5 m-2 rounded bg-white">
                     <form @submit.prevent="submit">
                         <div>
-                            <InputLabel for="name" value="Name" />
+                            <InputLabel for="title" value="Title" />
                             <TextInput
-                                id="name"
+                                id="title"
                                 type="text"
                                 class="mt-1 block w-full"
-                                v-model="form.name"
+                                v-model="form.title"
                                 autofocus
-                                autocomplete="name"
+                                autocomplete="title"
                             />
                             <InputError
                                 class="mt-2"
-                                :message="form.errors.name"
+                                :message="form.errors.title"
+                            />
+                        </div>
+
+                        <div class="mt-4">
+                            <InputLabel for="url" value="Url" />
+                            <TextInput
+                                id="url"
+                                type="text"
+                                class="mt-1 block w-full"
+                                v-model="form.url"
+                                autocomplete="url"
+                            />
+                            <InputError
+                                class="mt-2"
+                                :message="form.errors.url"
                             />
                         </div>
 
@@ -72,7 +93,7 @@ const submit = () => {
                                 :class="{ 'opacity-25': form.processing }"
                                 :disabled="form.processing"
                             >
-                                Edit
+                                Update
                             </PrimaryButton>
                         </div>
                     </form>

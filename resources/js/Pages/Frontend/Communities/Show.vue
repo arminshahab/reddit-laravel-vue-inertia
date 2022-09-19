@@ -13,17 +13,17 @@
         >
       </div>
     </template>
-    <section class="m-2 p-2 flex">
-      <div class="w-8/12">
+    <section class="m-2 p-2 flex flex-col md:flex-row">
+      <div class="w-full md:w-8/12">
         <PostCard
           v-for="post in posts.data"
           :post="post"
-          :community="community.name"
+          :community="community.slug"
           :key="post.id"
         />
         <Pagination :links="posts.meta.links" />
       </div>
-      <div class="w-4/12">
+      <div class="w-full md:w-4/12">
         <div class="mx-2 p-2 bg-slate-500 text-white">
           <h2>Latest communities</h2>
         </div>

@@ -49,12 +49,12 @@ defineProps({
             <td class="py-4 px-6">{{ community.slug }}</td>
             <td class="py-4 px-6">
               <Link
-                :href="route('communities.edit', community.id)"
+                :href="route('communities.edit', community.slug)"
                 class="text-green-500 mr-3"
                 >Edit</Link
               >
               <Link
-                :href="route('communities.destroy', community.id)"
+                :href="route('communities.destroy', community.slug)"
                 as="button"
                 method="delete"
                 class="text-red-500"
