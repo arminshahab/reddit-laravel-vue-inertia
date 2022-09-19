@@ -13,7 +13,7 @@ class PostController extends Controller
 {
     public function show(Community $community, $slug)
     {
-        $post = new PostShowResource(Post::where('slug', $slug)->first());
+        $post = new PostShowResource(Post::with('comments')->where('slug', $slug)->first());
 
         return Inertia('Frontend/Posts/Show', compact(['community', 'post']));
     }
