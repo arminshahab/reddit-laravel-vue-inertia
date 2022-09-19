@@ -44,7 +44,11 @@ defineProps({
               scope="row"
               class="whitespace-nowrap py-4 px-6 font-medium text-gray-900"
             >
-              {{ community.name }}
+              <Link
+                :href="route('frontend.communities.show', community.slug)"
+                class="font-semibold text-blue-800 hover:text-blue-400 py-4 text-lg"
+                >{{ community.name }}</Link
+              >
             </th>
             <td class="py-4 px-6">{{ community.slug }}</td>
             <td class="py-4 px-6">
@@ -70,5 +74,3 @@ defineProps({
     </div>
   </AuthenticatedLayout>
 </template>
-
-
