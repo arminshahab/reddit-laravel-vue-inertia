@@ -83,10 +83,11 @@ const submit = () => {
               <span class="text-slate-500 text-sm">Comment by </span>
               <span class="font-bold">{{ comment.username }}</span>
             </p>
-            <p>{{ comment.content }}</p>
+            <p class="px-5 py-2 rounded-lg bg-slate-200 max-w-sm">
+              {{ comment.content }}
+            </p>
             <hr class="my-2" />
           </div>
-
           <!-- Post Comment -->
           <form
             class="m-2 max-w-sm p-2"

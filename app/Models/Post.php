@@ -11,12 +11,13 @@ class Post extends Model
     use HasFactory, Sluggable;
 
     protected $fillable = [
-        'user_id', 
-        'community_id', 
-        'title', 
-        'slug', 
-        'description', 
-        'url'
+        'user_id',
+        'community_id',
+        'title',
+        'slug',
+        'description',
+        'url',
+        'votes'
     ];
 
     public function sluggable(): array
@@ -28,20 +29,28 @@ class Post extends Model
         ];
     }
 
-    public function getRouteKeyName()  {
+    public function getRouteKeyName()
+    {
         return 'slug';
     }
 
-    public function community() {
+    public function community()
+    {
         return $this->belongsTo(Community::class);
     }
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
     public function comments()
     {
         return $this->hasMany(Comment::class);
+    }
+
+    public function postVotes()
+    {
+        return $this->hasMany(PostVote::class);
     }
 }

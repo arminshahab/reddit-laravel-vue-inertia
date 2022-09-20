@@ -5,6 +5,7 @@ use App\Http\Controllers\Backend\CommunityPostController;
 use App\Http\Controllers\Frontend\CommunityController as FrontendCommunityController;
 use App\Http\Controllers\Frontend\PostCommentController;
 use App\Http\Controllers\Frontend\PostController;
+use App\Http\Controllers\PostVoteController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -40,6 +41,9 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
     Route::resource('communities', CommunityController::class);
     Route::resource('communities.posts', CommunityPostController::class);
+
+    Route::post('/posts/{post}/upvote', [PostVoteController::class, 'upvote'])->name('post.upvote');
+    Route::post('/posts/{post}/downvote', [PostVoteController::class, 'downvote'])->name('post.downvote');
 });
 
 require __DIR__ . '/auth.php';
