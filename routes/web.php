@@ -5,6 +5,7 @@ use App\Http\Controllers\Backend\CommunityPostController;
 use App\Http\Controllers\Frontend\CommunityController as FrontendCommunityController;
 use App\Http\Controllers\Frontend\PostCommentController;
 use App\Http\Controllers\Frontend\PostController;
+use App\Http\Controllers\Frontend\WelcomeController;
 use App\Http\Controllers\PostVoteController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -21,14 +22,7 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
+Route::get('/', [WelcomeController::class, 'welcome']);
 
 Route::get('/r/{community}', [FrontendCommunityController::class, 'show'])->name('frontend.communities.show');
 

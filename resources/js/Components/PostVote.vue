@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col items-center">
+  <div class="flex flex-col bg-slate-200 p-3 h-full items-center space-y-4">
     <Link
       :href="route('post.upvote', post.slug)"
       as="button"
@@ -27,7 +27,18 @@
         />
       </svg>
     </Link>
-    <p class="text-xl">{{ post.votes }}</p>
+    <p
+      class="text-xl font-bold"
+      :class="[
+        post.postVotes[0] && post.postVotes[0].vote == 1
+          ? 'text-blue-500': '',
+        post.postVotes[0] && post.postVotes[0].vote == -1
+          ? 'text-red-500'
+          : 'text-slate-400',
+      ]"
+    >
+      {{ post.votes }}
+    </p>
     <Link
       :href="route('post.downvote', post.slug)"
       as="button"

@@ -24,8 +24,18 @@
         <Pagination :links="posts.meta.links" />
       </div>
       <div class="w-full md:w-4/12">
-        <div class="mx-2 p-2 bg-slate-500 text-white">
-          <h2>Latest communities</h2>
+        <div class="mx-2">
+          <div class="mb-4">
+            <h2
+              class="font-semibold text-lg p-6 bg-indigo-700 text-white rounded-t-lg"
+            >
+              About {{ community.name }}
+            </h2>
+            <p class="bg-white p-4 rounded-b-lg">{{ community.description }}</p>
+          </div>
+          <CommunityList :communities="communities.data">
+            <template #title> Latest Communities </template>
+          </CommunityList>
         </div>
       </div>
     </section>
@@ -36,10 +46,12 @@
 import GuestLayout from "@/Layouts/GuestLayout.vue";
 import { Link } from "@inertiajs/inertia-vue3";
 import PostCard from "@/Components/PostCard.vue";
-import Pagination from '@/Components/Pagination.vue';
+import Pagination from "@/Components/Pagination.vue";
+import CommunityList from "@/Components/CommunityList.vue";
 
 defineProps({
   community: Object,
   posts: Object,
+  communities: Object,
 });
 </script>
